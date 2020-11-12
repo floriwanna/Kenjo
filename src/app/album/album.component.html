@@ -1,0 +1,9 @@
+<div>
+    <button (click)="addAlbum()" mat-mini-fab>
+        <mat-icon>
+            add
+        </mat-icon>
+    </button>
+    <app-grid-view [elements]="albums" (showMore)="showMore($event[0])" (remove)="onRemove($event[0])">
+    </app-grid-view>
+</div>

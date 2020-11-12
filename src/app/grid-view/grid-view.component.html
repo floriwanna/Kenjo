@@ -1,0 +1,32 @@
+<div>
+    <button mat-icon-button (click)="changeView()">
+        <mat-icon *ngIf="!gridView">list</mat-icon>
+        <mat-icon *ngIf="gridView">view_module</mat-icon>
+    </button>
+    <!-- <mat-spinner *ngIf="!elements || elements.length == 0 "></mat-spinner> -->
+    <mat-grid-list *ngIf="gridView" cols="6" rowHeight="300px">
+        <mat-grid-tile *ngFor="let ele of elements" [colspan]="2" [rowspan]="1">
+            <mat-card class="custom-card">
+                <img class="custom-card avatar" [src]="ele.img_url">
+                <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                <mat-card-header>
+                    <mat-card-title>{{ele.title}}</mat-card-title>
+                    <mat-card-subtitle *ngIf="ele.subtitle">{{ele.subtitle}}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button (click)="onShowMore(ele)">Show More</button>
+                    <button mat-button (click)="onRemove(ele)">Remove</button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-list *ngIf="!gridView" role="list" class="custom-list">
+        <mat-list-item class="item" role="listitem" *ngFor="let ele of elements">
+            <img class="avatar" [src]="ele.img_url">
+            {{ele.title}}
+        </mat-list-item>
+    </mat-list>
+
+
+</div>

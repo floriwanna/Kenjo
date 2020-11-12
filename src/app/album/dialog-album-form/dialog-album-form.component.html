@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>New Album</h2>
+<form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content class="mat-typography">
+        <!-- <button>
+    <mat-icon>edit</mat-icon>
+</button> -->
+        <mat-form-field appearance="standard">
+            <input matInput placeholder="Title" formControlName="title" required />
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+            <mat-label>Artist</mat-label>
+            <mat-select formControlName="artistId" name="artist">
+            </mat-select>
+        </mat-form-field> -->
+        <div *ngIf="isCreate()">
+            <p></p>
+            <mat-form-field appearance="standard">
+                <mat-label>Select</mat-label>
+                <mat-select formControlName="artistId">
+                    <mat-option>Select</mat-option>
+                    <mat-option *ngFor="let artist of artists" [value]="artist._id">
+                        {{artist.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <p></p>
+        <div>
+            <mat-form-field appearance="standard">
+                <input matInput placeholder="Cover" formControlName="coverUrl" />
+            </mat-form-field>
+            <p></p>
+            <img *ngIf="albumForm.controls.coverUrl.value.length > 0" style="width: 100px; height: 100px;"
+                [src]="albumForm.controls.coverUrl.value">
+        </div>
+        <p></p>
+
+        <mat-form-field appearance="standard">
+            <input matInput placeholder="Year" [formControl]="albumForm.controls.year" />
+            <mat-hint *ngIf="albumForm.controls.year?.errors?.number && !albumForm.controls.year?.pristine">
+                <span style="color: #f44336;">
+                    Year should be from 1090 to 2030
+                </span>
+            </mat-hint>
+        </mat-form-field>
+        <p></p>
+
+        <p></p>
+        <mat-form-field appearance="standard">
+            <input matInput placeholder="Genre" formControlName="genre" />
+        </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="null">Cancel</button>
+        <button type="submit" mat-button>Add</button>
+    </mat-dialog-actions>
+</form>

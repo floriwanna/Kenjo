@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -66,7 +67,10 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "appDisc:build"
+            "browserTarget": "appDisc:build",
+            "proxyConfig": "src/proxy.conf.json",
+            "disableHostCheck": true,
+            "host": "0.0.0.0"
           },
           "configurations": {
             "production": {
@@ -92,6 +96,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +128,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "appDisc"
+    }
+  },
+  "defaultProject": "appDisc",
+  "cli": {
+    "analytics": "7e7b7ffe-a97e-49b5-80cc-1f3573aab760"
+  }
 }
