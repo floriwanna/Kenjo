@@ -7,6 +7,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { Album } from '../model/album.model';
 import { ListElement } from '../model/list-element.model';
 import { DialogAlbumFormComponent } from './dialog-album-form/dialog-album-form.component';
+import { AlbumService } from '../service/album.service';
+
 
 @Component({
   selector: 'app-album',
@@ -15,11 +17,12 @@ import { DialogAlbumFormComponent } from './dialog-album-form/dialog-album-form.
 })
 export class AlbumComponent implements OnInit {
 
-  constructor(private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private http: HttpClient,
+    private dialog: MatDialog,
+    private albumService: AlbumService) { }
 
   ngOnInit(): void {
-    console.log(this.http.get('/api/albums/all'))
-    this.http.get('/api/albums/all').toPromise().then(res => {
+    this.albumService.all().then(res => {
       this.albums = (res as Array<any>).map(x => {
         return {
           _id: x._id, img_url: x.coverUrl, title: x.title
@@ -47,7 +50,7 @@ export class AlbumComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(result => {
       if (result)
-        this.http.delete(`/api/album/${listElement._id}`).toPromise().then((res: Album) => {
+        this.albumService.delete(listElement._id).then((res: Album) => {
           this.albums = this.albums.filter(f => f._id != res._id);
         });
     })

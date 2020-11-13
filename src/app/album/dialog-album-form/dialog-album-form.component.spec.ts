@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogAlbumFormComponent } from './dialog-album-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppValues } from 'src/app/app-values';
 import { Album } from 'src/app/model/album.model';
 import { ListElement } from 'src/app/model/list-element.model';
@@ -22,8 +22,9 @@ describe('DialogAlbumFormComponent', () => {
       ], providers: [
         {
           // I was expecting this will pass the desired value
-          provide: MAT_DIALOG_DATA
-        }
+          provide: MAT_DIALOG_DATA, useValue: { data: {} },
+        },
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
       .compileComponents();
@@ -44,6 +45,7 @@ describe('DialogAlbumFormComponent', () => {
       expect(component.status).toEqual(AppValues.DIALOG_STATUS.CREATE);
     })
     it('show artist field on create', () => {
+
       component.status = AppValues.DIALOG_STATUS.CREATE;
 
       // obtener el html
@@ -87,6 +89,7 @@ describe('DialogAlbumFormComponent', () => {
       // Injectar listElement en el constructor
 
       // Como hacer mock del httpClient
+      expect(true).toBe(false)
     })
   });
 });

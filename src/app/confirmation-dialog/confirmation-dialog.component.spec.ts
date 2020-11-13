@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 
@@ -9,12 +9,13 @@ describe('ConfirmationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ConfirmationDialogComponent,],
+      declarations: [ConfirmationDialogComponent],
       imports: [
         MatDialogModule
       ],
       providers: [
-        MAT_DIALOG_DATA
+        { provide: MAT_DIALOG_DATA, useValue: { data: {} } },
+        { provide: MatDialogRef, useValue: {} }
       ]
     })
       .compileComponents();

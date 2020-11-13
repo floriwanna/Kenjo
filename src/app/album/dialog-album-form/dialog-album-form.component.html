@@ -33,7 +33,7 @@
                 <input matInput placeholder="Cover" formControlName="coverUrl" />
             </mat-form-field>
             <p></p>
-            <img *ngIf="albumForm.controls.coverUrl.value.length > 0" style="width: 100px; height: 100px;"
+            <img *ngIf="albumForm.controls.coverUrl?.value.length > 0" style="width: 100px; height: 100px;"
                 [src]="albumForm.controls.coverUrl.value">
         </div>
         <p></p>
