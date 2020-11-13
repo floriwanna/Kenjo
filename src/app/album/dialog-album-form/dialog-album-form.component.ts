@@ -7,6 +7,7 @@ import { Album } from 'src/app/model/album.model';
 import { CustomValidators } from '../../custom-validator';
 
 import { AppValues } from '../../app-values';
+import { AlbumService } from 'src/app/service/album.service';
 @Component({
   selector: 'app-dialog-album-form',
   templateUrl: './dialog-album-form.component.html',
@@ -22,6 +23,7 @@ export class DialogAlbumFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
+    private albumService: AlbumService,
     public dialogRef: MatDialogRef<DialogAlbumFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ListElement
   ) {
@@ -29,7 +31,7 @@ export class DialogAlbumFormComponent implements OnInit {
     this.status = !data ? AppValues.DIALOG_STATUS.CREATE : AppValues.DIALOG_STATUS.UPDATE;
 
     if (data) {
-      this.httpClient.get(`/api/album/${data._id}`).toPromise().then((x: Album) => {
+      this.albumService.get(data._id).then((x: Album) => {
         this.albumForm.patchValue({
           year: x.year,
           genre: x.genre
@@ -53,7 +55,7 @@ export class DialogAlbumFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get('/api/artists/all').toPromise().then(x => {
+    this.albumService.all().then(x => {
       this.artists = x;
     })
   }
@@ -71,10 +73,11 @@ export class DialogAlbumFormComponent implements OnInit {
         coverUrl: this.albumForm.value.coverUrl,
         year: this.albumForm.value.year,
         genre: this.albumForm.value.genre
-      };
+      } as Album;
 
       if (this.data) {
-        this.httpClient.put('/api/album', new_album).toPromise().then(x => {
+        new_album._id = this.data._id;
+        this.albumService.put(new_album).then(x => {
           console.log(x)
           // this.dialogRef.close(this.albumForm.value);
           this.dialogRef.close(x);
@@ -82,7 +85,7 @@ export class DialogAlbumFormComponent implements OnInit {
         }).catch(err => { console.error(err) });
 
       } else {
-        this.httpClient.post('/api/album', new_album).toPromise().then(x => {
+        this.albumService.post(new_album).toPromise().then(x => {
           console.log(x)
           // this.dialogRef.close(this.albumForm.value);
           this.dialogRef.close(x);

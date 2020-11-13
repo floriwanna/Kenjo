@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListElement } from 'src/app/model/list-element.model';
 import { Artist } from './../../model/artist.model';
 import { AppValues } from 'src/app/app-values';
-
+import { ArtistService } from '../../service/artist.service';
 @Component({
   selector: 'app-dialog-form',
   templateUrl: './dialog-artist-form.component.html',
@@ -18,6 +18,7 @@ export class DialogArtistFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
+    private artistService: ArtistService,
     public dialogRef: MatDialogRef<DialogArtistFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ListElement
   ) {
@@ -26,7 +27,7 @@ export class DialogArtistFormComponent implements OnInit {
     this.status = !data ? AppValues.DIALOG_STATUS.CREATE : AppValues.DIALOG_STATUS.UPDATE;
     console.warn('debo revisar el modelo del docker')
     if (data) {
-      this.httpClient.get(`/api/artist/${data._id}`).toPromise().then((x: Artist) => {
+      this.artistService.get(data._id).then((x: Artist) => {
         this.artistForm.patchValue({
         })
       })
