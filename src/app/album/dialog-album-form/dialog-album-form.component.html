@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>New Album</h2>
+<h2 mat-dialog-title>
+    <span>{{ isCreate()?  'New': 'Edit' }}</span> Album</h2>
 <form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content class="mat-typography">
         <!-- <button>

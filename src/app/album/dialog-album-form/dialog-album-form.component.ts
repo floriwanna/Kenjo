@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Album } from 'src/app/model/album.model';
 import { ListElement } from 'src/app/model/list-element.model';
+import { Album } from 'src/app/model/album.model';
 import { CustomValidators } from '../../custom-validator';
 
 import { AppValues } from '../../app-values';

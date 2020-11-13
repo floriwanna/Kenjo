@@ -1,9 +1,11 @@
 <h2 mat-dialog-title>New Artist</h2>
-<button>
-    <mat-icon>edit</mat-icon>
-</button>
 <mat-dialog-content class="mat-typography">
-    Aqui va el form
+    <form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard">
+            <input matInput placeholder="Title" formControlName="title" required />
+        </mat-form-field>
+
+    </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>

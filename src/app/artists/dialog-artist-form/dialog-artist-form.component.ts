@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ListElement } from 'src/app/model/list-element.model';
+import { Artist } from './../../model/artist.model';
+import { AppValues } from 'src/app/app-values';
 
 @Component({
   selector: 'app-dialog-form',
@@ -7,9 +13,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogArtistFormComponent implements OnInit {
 
-  constructor() { }
+  artistForm;
+  status;
+  constructor(
+    private formBuilder: FormBuilder,
+    private httpClient: HttpClient,
+    public dialogRef: MatDialogRef<DialogArtistFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ListElement
+  ) {
+
+
+    this.status = !data ? AppValues.DIALOG_STATUS.CREATE : AppValues.DIALOG_STATUS.UPDATE;
+    console.warn('debo revisar el modelo del docker')
+    if (data) {
+      this.httpClient.get(`/api/artist/${data._id}`).toPromise().then((x: Artist) => {
+        this.artistForm.patchValue({
+        })
+      })
+    }
+
+    this.artistForm = this.formBuilder.group({
+      _id: data ? data._id : '',
+      title: [data ? data.title : '', Validators.required],
+      artistId: '',
+      coverUrl: data ? data.img_url : '',
+    })
+  }
 
   ngOnInit(): void {
   }
+
+  onSubmit() { return true; }
 
 }

@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { elementAt } from 'rxjs/operators';
@@ -56,10 +56,12 @@ export class AlbumComponent implements OnInit {
   showMore(listElement: ListElement) {
     const dialogRef = this.dialog.open(DialogAlbumFormComponent, { data: listElement });
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.albums.push({
-          _id: result._id, img_url: result.coverUrl, title: result.title
-        } as ListElement);
+      if (result) {
+        let i = this.albums.findIndex(x => x._id == result._id)
+        this.albums[i].img_url = result.coverUrl;
+        this.albums[i].title = result.title;
+        this.albums[i]._id = result._id;
+      };
     });
   }
 }

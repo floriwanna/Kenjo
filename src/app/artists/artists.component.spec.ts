@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ArtistsComponent } from './artists.component';
 
@@ -8,7 +10,11 @@ describe('ArtistComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ArtistsComponent]
+      declarations: [ArtistsComponent],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ]
     })
       .compileComponents();
   }));
